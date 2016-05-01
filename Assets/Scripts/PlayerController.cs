@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		// distance is the between the gameObject and the camera
 		float distance = transform.position.z - Camera.main.transform.position.z;
 		Vector3 leftMost = Camera.main.ViewportToWorldPoint(new Vector3(0,0,distance));
 		Vector3 rightMost = Camera.main.ViewportToWorldPoint(new Vector3(1,0,distance));
@@ -43,7 +44,7 @@ public class PlayerController : MonoBehaviour {
 		unityy = this.transform.position.y;
 		if(Input.GetKey(KeyCode.DownArrow)){
 			typed = true;
-			unityy -= speed * Time.deltaTime;
+			unityy -= speed * Time.deltaTime;   // times delta time because if there is a lag of update, we should move longer in this update
 		}
 		if (Input.GetKey(KeyCode.UpArrow)) {
 			typed = true;

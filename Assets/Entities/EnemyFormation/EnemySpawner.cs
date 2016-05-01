@@ -11,8 +11,6 @@ public class EnemySpawner : MonoBehaviour {
 	public float speed = 1.0f;
 	Vector3 spawnerPos;
 
-	float unitx = 1.0f;
-	float unitt = 1.0f;
 	// Defining the edge of the screen which should not be crossed
 	float xmin;
 	float xmax;
@@ -26,7 +24,6 @@ public class EnemySpawner : MonoBehaviour {
 		Vector3 leftMost = Camera.main.ViewportToWorldPoint(new Vector3(0,0,distance));
 		Vector3 rightMost = Camera.main.ViewportToWorldPoint(new Vector3(1,0,distance));
 		Vector3 upMost = Camera.main.ViewportToWorldPoint(new Vector3(0,1,distance));
-		Vector3 startPoint = Camera.main.ViewportToWorldPoint(new Vector3(0.5f,0.2f,distance));
 		xmin = leftMost.x + padding;
 		xmax = rightMost.x - padding;
 		ymin = leftMost.y + padding;

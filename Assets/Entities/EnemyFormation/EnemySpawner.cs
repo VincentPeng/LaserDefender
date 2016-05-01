@@ -31,6 +31,7 @@ public class EnemySpawner : MonoBehaviour {
 		xmax = rightMost.x - padding;
 		ymin = leftMost.y + padding;
 		ymax = upMost.y - padding;
+		Debug.Log(xmin+" "+xmax);
 		foreach( Transform child in transform) {
 			GameObject enemy = Instantiate(enemyPrefab, child.transform.position, Quaternion.identity) as GameObject;
 			enemy.transform.parent = child;
@@ -46,21 +47,21 @@ public class EnemySpawner : MonoBehaviour {
 		if(moveRight){
 			// if right edge hits the xmax, moveRight set to false;
 			// position.x + width/2 + speed compares with xmax
-			if(transform.position.x + width/2 + speed >= xmax) {
+			if(transform.position.x + width/2 + speed*Time.deltaTime >= xmax) {
 				moveRight = false;
 			} else {// else transform.position + speed
 				spawnerPos = transform.position;
-				spawnerPos.x += speed;
+				spawnerPos.x += speed * Time.deltaTime;
 				transform.position = spawnerPos;
 			}
 		} else {
 			// if left edge hits the xmin, moveRight set to true
 			// position.x - width/2 -speed compares with xmin
-			if(transform.position.x - width/2 - speed <= xmin) {
+			if(transform.position.x - width/2 - speed*Time.deltaTime <= xmin) {
 				moveRight = true;
 			} else {
 				spawnerPos = transform.position;
-				spawnerPos.x -= speed;
+				spawnerPos.x -= speed * Time.deltaTime;
 				transform.position = spawnerPos;
 			}
 

@@ -10,6 +10,10 @@ public class PlayerController : MonoBehaviour {
 	Vector3 heroPos;
 	public float speed = 0.5f;
 	public float padding = 0.5f;
+	public float projectileSpeed = 1.0f;
+	public float firingRate = 0.2f;
+
+	public GameObject projectile;
 
 	// Defining the edge of the screen which should not be crossed
 	float xmin;
@@ -35,7 +39,18 @@ public class PlayerController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if(Input.GetKeyDown(KeyCode.Space)) {
+			InvokeRepeating("Fire",0.0001f, firingRate);
+		}
+		if(Input.GetKeyUp(KeyCode.Space)) {
+			CancelInvoke();
+		}
 		MoveWithKeyboard();
+	}
+
+	void Fire() {
+		GameObject beam = Instantiate(projectile, transform.position, Quaternion.identity) as GameObject;  // Instantiate function returns Object instead of GameObject
+		beam.GetComponent<Rigidbody2D>().velocity = new Vector3(0,projectileSpeed,0);
 	}
 
 	void MoveWithKeyboard() {

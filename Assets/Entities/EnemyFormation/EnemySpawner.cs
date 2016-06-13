@@ -23,16 +23,13 @@ public class EnemySpawner : MonoBehaviour {
 		float distance = transform.position.z - Camera.main.transform.position.z;
 		Vector3 leftMost = Camera.main.ViewportToWorldPoint(new Vector3(0,0,distance));
 		Vector3 rightMost = Camera.main.ViewportToWorldPoint(new Vector3(1,0,distance));
-		Vector3 upMost = Camera.main.ViewportToWorldPoint(new Vector3(0,1,distance));
+		//Vector3 upMost = Camera.main.ViewportToWorldPoint(new Vector3(0,1,distance));
 		xmin = leftMost.x + padding;
 		xmax = rightMost.x - padding;
 //		ymin = leftMost.y + padding;
 //		ymax = upMost.y - padding;
 		Debug.Log(xmin+" "+xmax);
-		foreach( Transform child in transform) {
-			GameObject enemy = Instantiate(enemyPrefab, child.transform.position, Quaternion.identity) as GameObject;
-			enemy.transform.parent = child;
-		}
+		SpawnEnemies();
 	}
 
 	public void OnDrawGizmos() {
@@ -62,6 +59,27 @@ public class EnemySpawner : MonoBehaviour {
 				transform.position = spawnerPos;
 			}
 
+		}
+
+		if(AllEnemiesClear()){
+			Debug.Log("All Enemies Down!");
+			SpawnEnemies();
+		}
+	}
+
+	private bool AllEnemiesClear(){
+		foreach (Transform childPosition in transform) {
+			if(childPosition.childCount > 0) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	private void SpawnEnemies() {
+		foreach( Transform child in transform) {
+			GameObject enemy = Instantiate(enemyPrefab, child.transform.position, Quaternion.identity) as GameObject;
+			enemy.transform.parent = child;
 		}
 	}
 }

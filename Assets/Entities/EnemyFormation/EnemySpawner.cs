@@ -14,8 +14,8 @@ public class EnemySpawner : MonoBehaviour {
 	// Defining the edge of the screen which should not be crossed
 	float xmin;
 	float xmax;
-	float ymin;
-	float ymax;
+//	float ymin;
+//	float ymax;
 
 	// Use this for initialization
 	void Start () {
@@ -26,8 +26,8 @@ public class EnemySpawner : MonoBehaviour {
 		Vector3 upMost = Camera.main.ViewportToWorldPoint(new Vector3(0,1,distance));
 		xmin = leftMost.x + padding;
 		xmax = rightMost.x - padding;
-		ymin = leftMost.y + padding;
-		ymax = upMost.y - padding;
+//		ymin = leftMost.y + padding;
+//		ymax = upMost.y - padding;
 		Debug.Log(xmin+" "+xmax);
 		foreach( Transform child in transform) {
 			GameObject enemy = Instantiate(enemyPrefab, child.transform.position, Quaternion.identity) as GameObject;

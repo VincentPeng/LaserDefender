@@ -9,6 +9,7 @@ public class EnemySpawner : MonoBehaviour {
 	private bool moveRight = true;
 	public float padding = 0.5f;
 	public float speed = 1.0f;
+	private float spawnDelay = 0.5f;
 	Vector3 spawnerPos;
 
 	// Defining the edge of the screen which should not be crossed
@@ -29,7 +30,7 @@ public class EnemySpawner : MonoBehaviour {
 //		ymin = leftMost.y + padding;
 //		ymax = upMost.y - padding;
 		Debug.Log(xmin+" "+xmax);
-		SpawnEnemies();
+		SpawnUntilFull();
 	}
 
 	public void OnDrawGizmos() {
@@ -63,7 +64,28 @@ public class EnemySpawner : MonoBehaviour {
 
 		if(AllEnemiesClear()){
 			Debug.Log("All Enemies Down!");
-			SpawnEnemies();
+			SpawnUntilFull();
+		}
+	}
+
+	// Return the next free position that can spawn enemy
+	Transform NextFreePosition() {
+		foreach (Transform childPosition in transform) {
+			if(childPosition.childCount <= 0) {
+				return childPosition;
+			}
+		}
+		return null;
+	}
+
+	void SpawnUntilFull() {
+		Transform freePosition = NextFreePosition();
+		if(freePosition) {
+			GameObject enemy = Instantiate(enemyPrefab, freePosition.position, Quaternion.identity) as GameObject;
+			enemy.transform.parent = freePosition;
+		}
+		if(NextFreePosition()) {
+			Invoke("SpawnUntilFull",spawnDelay);
 		}
 	}
 
@@ -78,7 +100,7 @@ public class EnemySpawner : MonoBehaviour {
 
 	private void SpawnEnemies() {
 		foreach( Transform child in transform) {
-			GameObject enemy = Instantiate(enemyPrefab, child.transform.position, Quaternion.identity) as GameObject;
+			GameObject enemy = Instantiate(enemyPrefab, child.position, Quaternion.identity) as GameObject;
 			enemy.transform.parent = child;
 		}
 	}

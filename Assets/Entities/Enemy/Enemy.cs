@@ -11,11 +11,13 @@ public class Enemy : MonoBehaviour {
 
 	private Vector3 startPosition;
 	//private bool gameStarted = false;
+	private ScoreKeeper scoreKeeper;
 
 	void Start() {
 		//gameStarted = false;
 		repeatRate = Random.value*10000;
 		Invoke("Fire", Random.Range(1.5f, 4.0f));
+		scoreKeeper = GameObject.Find("Text").GetComponent<ScoreKeeper>();
 	}
 
 	void OnTriggerEnter2D(Collider2D other) {
@@ -25,6 +27,7 @@ public class Enemy : MonoBehaviour {
 			health -= missile.GetDamage();
 			missile.Hit();
 			if(health<=0) {
+				scoreKeeper.AddScore(1);
 				Destroy(gameObject);
 			}
 

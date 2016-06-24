@@ -18,6 +18,15 @@ public class ScoreKeeper : MonoBehaviour {
 		scoreBoard.text = myScore.ToString();
 	}
 
+	public void Reset() {
+		myScore = 0;
+		scoreBoard.text = myScore.ToString();
+	}
+
+	public int GetScore() {
+		return myScore;
+	}
+
 	// Update is called once per frame
 	void Update () {
 		

@@ -17,6 +17,8 @@ public class PlayerController : MonoBehaviour {
 
 	public GameObject projectile;
 
+	private LevelManager manager;
+
 	// Defining the edge of the screen which should not be crossed
 	float xmin;
 	float xmax;
@@ -37,6 +39,7 @@ public class PlayerController : MonoBehaviour {
 		ymax = upMost.y - padding;
 		heroPos = startPoint;
 		this.transform.position = heroPos;
+		manager = new LevelManager();
 	}
 	
 	// Update is called once per frame
@@ -96,6 +99,7 @@ public class PlayerController : MonoBehaviour {
 			missile.Hit();
 			if(health<=0) {
 				Destroy(gameObject);
+				manager.LoadLevel("Lose Screen");
 			}
 			//Debug.Log("hit by a projectile");
 		}

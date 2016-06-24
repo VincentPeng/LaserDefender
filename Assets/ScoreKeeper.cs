@@ -10,7 +10,7 @@ public class ScoreKeeper : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		scoreBoard = GetComponent<Text>();
-		scoreBoard.text = myScore.ToString();
+		Reset();
 	}
 
 	public void AddScore(int score) {

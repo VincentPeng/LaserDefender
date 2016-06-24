@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour {
 	public float projectileSpeed = 1.0f;
 	public float firingRate = 0.2f;
 	public float health = 250.0f;
+	public AudioClip destroySound;
 	private Vector3 startPosition;
 
 	public GameObject projectile;
@@ -98,6 +99,7 @@ public class PlayerController : MonoBehaviour {
 			health -= missile.GetDamage();
 			missile.Hit();
 			if(health<=0) {
+				AudioSource.PlayClipAtPoint(destroySound,transform.position);
 				Destroy(gameObject);
 				manager.LoadLevel("Lose Screen");
 			}

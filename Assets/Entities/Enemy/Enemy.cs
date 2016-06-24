@@ -8,6 +8,7 @@ public class Enemy : MonoBehaviour {
 	public float bulletSpeed = 20.0f;
 	public float repeatRate = 4.0f;
 	public float shotsPerSecond = 0.5f;
+	public AudioClip destroyAudio;
 
 	private Vector3 startPosition;
 	//private bool gameStarted = false;
@@ -29,6 +30,7 @@ public class Enemy : MonoBehaviour {
 			missile.Hit();
 			if(health<=0) {
 				scoreKeeper.AddScore(scoreValue);
+				AudioSource.PlayClipAtPoint(destroyAudio,Camera.main.transform.position);
 				Destroy(gameObject);
 			}
 

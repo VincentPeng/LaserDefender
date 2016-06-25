@@ -29,7 +29,6 @@ public class EnemySpawner : MonoBehaviour {
 		xmax = rightMost.x - padding;
 //		ymin = leftMost.y + padding;
 //		ymax = upMost.y - padding;
-		Debug.Log(xmin+" "+xmax);
 		SpawnUntilFull();
 	}
 

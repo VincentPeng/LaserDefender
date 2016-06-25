@@ -18,7 +18,6 @@ public class PlayerController : MonoBehaviour {
 
 	public GameObject projectile;
 
-	private LevelManager manager;
 
 	// Defining the edge of the screen which should not be crossed
 	float xmin;
@@ -40,7 +39,6 @@ public class PlayerController : MonoBehaviour {
 		ymax = upMost.y - padding;
 		heroPos = startPoint;
 		this.transform.position = heroPos;
-		manager = new LevelManager();
 	}
 	
 	// Update is called once per frame
@@ -100,11 +98,16 @@ public class PlayerController : MonoBehaviour {
 			health -= missile.GetDamage();
 			missile.Hit();
 			if(health<=0) {
-				Destroy(gameObject);
-				manager.LoadLevel("Lose Screen");
+				Die();
 			}
 			//Debug.Log("hit by a projectile");
 		}
+	}
+
+	void Die() {
+		Destroy(gameObject);
+		LevelManager levelMan = GameObject.Find("LevelManager").GetComponent<LevelManager>();
+		levelMan.LoadLevel("Lose Screen");
 	}
 
 }

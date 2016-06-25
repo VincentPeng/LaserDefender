@@ -17,7 +17,7 @@ public class Enemy : MonoBehaviour {
 
 	void Start() {
 		//gameStarted = false;
-		repeatRate = Random.value*10000;
+		repeatRate = Random.value * 10000;
 		Invoke("Fire", Random.Range(1.5f, 4.0f));
 		scoreKeeper = GameObject.Find("ScoreBoard").GetComponent<ScoreKeeper>();
 	}
@@ -25,13 +25,11 @@ public class Enemy : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D other) {
 		//Debug.Log("hits");
 		Projectile missile = other.gameObject.GetComponent<Projectile>();
-		if(missile) {
+		if (missile) {
 			health -= missile.GetDamage();
 			missile.Hit();
-			if(health<=0) {
-				scoreKeeper.AddScore(scoreValue);
-				AudioSource.PlayClipAtPoint(destroyAudio,Camera.main.transform.position);
-				Destroy(gameObject);
+			if (health <= 0) {
+				Die();
 			}
 
 			//Debug.Log("hit by a projectile");
@@ -58,9 +56,15 @@ public class Enemy : MonoBehaviour {
 
 	// Fire a bullet
 	void Fire() {
-		startPosition = transform.position + new Vector3(0,-1,0);
+		startPosition = transform.position + new Vector3(0, -1, 0);
 		GameObject beam = Instantiate(bullet, startPosition, Quaternion.identity) as GameObject;
-		beam.GetComponent<Rigidbody2D>().velocity = new Vector3(0,-bulletSpeed,0);
-		Invoke("Fire",Random.Range(1.5f, 4.0f));
+		beam.GetComponent<Rigidbody2D>().velocity = new Vector3(0, -bulletSpeed, 0);
+		Invoke("Fire", Random.Range(1.5f, 4.0f));
+	}
+
+	void Die() {
+		scoreKeeper.AddScore(scoreValue);
+		AudioSource.PlayClipAtPoint(destroyAudio, Camera.main.transform.position);
+		Destroy(gameObject);
 	}
 }

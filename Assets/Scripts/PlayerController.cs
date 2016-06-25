@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour {
 	public float projectileSpeed = 1.0f;
 	public float firingRate = 0.2f;
 	public float health = 250.0f;
-	public AudioClip destroySound;
+	public AudioClip shootSound;
 	private Vector3 startPosition;
 
 	public GameObject projectile;
@@ -55,6 +55,7 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void Fire() {
+		AudioSource.PlayClipAtPoint(shootSound,Camera.main.transform.position);
 		startPosition = transform.position + new Vector3(0,1,0);
 		GameObject beam = Instantiate(projectile, startPosition, Quaternion.identity) as GameObject;  // Instantiate function returns Object instead of GameObject
 		beam.GetComponent<Rigidbody2D>().velocity = new Vector3(0,projectileSpeed,0);
@@ -99,7 +100,6 @@ public class PlayerController : MonoBehaviour {
 			health -= missile.GetDamage();
 			missile.Hit();
 			if(health<=0) {
-				AudioSource.PlayClipAtPoint(destroySound,transform.position);
 				Destroy(gameObject);
 				manager.LoadLevel("Lose Screen");
 			}
